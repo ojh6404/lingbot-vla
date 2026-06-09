@@ -34,9 +34,11 @@ rm -rf "${DEST}" "${DEST}_old" "${DEST}_v30"
 mkdir -p "$(dirname "${DEST}")"
 cp -r "${STAGE}/${SUBSET}/${TASK}" "${DEST}"
 
-# 3) Upgrade v2.1 -> v3.0 in place (root defaults to HF_LEROBOT_HOME/repo_id, which we just filled,
-#    so this does NOT hit the Hub). v3.0 ends up at ${DEST}, v2.1 backup at ${DEST}_old.
-${PY} -m lerobot.datasets.v30.convert_dataset_v21_to_v30 --repo-id "${REPO_ID}"
+# 3) Upgrade v2.1 -> v3.0 in place. Pass --root so lerobot reads the LOCAL dataset directly and does
+#    NOT try to download a (nonexistent) v3.0 from the Hub (a bare --repo-id triggers a 404 hub
+#    lookup for local-only datasets). v3.0 ends up at ${DEST}, v2.1 backup at ${DEST}_old.
+${PY} -m lerobot.datasets.v30.convert_dataset_v21_to_v30 \
+    --repo-id "${REPO_ID}" --root "${HF_LEROBOT_HOME}"
 
 echo
 echo "Dataset ready (LeRobot v3.0): ${DEST}"
