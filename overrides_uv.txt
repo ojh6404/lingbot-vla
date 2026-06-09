@@ -1,0 +1,7 @@
+# uv install overrides: force the torch 2.9 + CUDA 12.8 stack everywhere, beating lingbot's
+# setup.py (torch==2.8.0, torchvision==0.23.0, torchaudio==2.8.0), requirements.txt
+# (torchcodec==0.6.0, torch-2.8-only) and any lerobot pin. Applied via `uv pip install --override`.
+torch==2.9.0
+torchvision==0.24.0
+torchaudio==2.9.0
+torchcodec==0.8.0
